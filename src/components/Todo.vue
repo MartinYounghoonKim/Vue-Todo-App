@@ -74,9 +74,6 @@ export default{
 .todo-list li .edit {
     display: block;
 }
-.todo-list li .view {
-    display: none;
-}
 .todo-list li:last-child {
     margin-bottom: -1px;
 }
