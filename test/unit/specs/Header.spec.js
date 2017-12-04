@@ -1,3 +1,5 @@
+import { mount } from 'avoriaz';
+
 import Vue from 'vue';
 import Header from '@/components/Header';
 
@@ -9,16 +11,15 @@ describe('Header.vue', () => {
     .to.equal('Vue Test')
   })
   it('adds a new todo item to list on enter', () => {
-    const Constructor = Vue.extend(Header);
-    const vm = new Constructor().$mount();
+    const HeaderComponent = mount(Header);
 
-    vm.newItem = 'test3';
+    HeaderComponent.setData({
+      newItem: 'test3'
+    });
 
-    const input = vm.$el.querySelector('.new-todo');
-    const keyDownEvent = new window.Event('keydown');
-    input.dispatchEvent(keyDownEvent);
-    vm._watcher.run();
-    
-    expect(vm.items).to.contain('test3');
+    const input = HeaderComponent.find('input')[0];
+    input.trigger('keydown');
+
+    expect(HeaderComponent.data().items).to.contain('test3');
   })
 })
