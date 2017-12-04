@@ -6,15 +6,22 @@
 			autocomplete="off" 
 			placeholder="What needs to be done?" 
 			class="new-todo" 
-			@keydown.enter="addTodos"
+			@keydown="addTodos"
 		/>
     </div>
 </template>
 <script>
 export default{
 	name: 'header',
+	data () {
+		return {
+			newItem: '',
+			items: ['test1', 'test2']
+		}
+	},
 	methods: {
 		addTodos (e) {
+			this.items.push(this.newItem);
 			const textElement = e.target;
 			const userValue = textElement.value;
 

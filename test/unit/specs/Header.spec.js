@@ -11,6 +11,14 @@ describe('Header.vue', () => {
   it('adds a new todo item to list on enter', () => {
     const Constructor = Vue.extend(Header);
     const vm = new Constructor().$mount();
-    vm.newItem = 'brush my teeth';
+
+    vm.newItem = 'test3';
+
+    const input = vm.$el.querySelector('.new-todo');
+    const keyDownEvent = new window.Event('keydown');
+    input.dispatchEvent(keyDownEvent);
+    vm._watcher.run();
+    
+    expect(vm.items).to.contain('test3');
   })
 })
