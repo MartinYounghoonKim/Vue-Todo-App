@@ -4,13 +4,14 @@ import Vue from 'vue';
 import Header from '@/components/Header';
 
 describe('Header.vue', () => {
-  it('should render correct contents', () => {
-    const Constructor = Vue.extend(Header);
-    const vm = new Constructor().$mount();
-    expect(vm.$el.querySelector('.header h1').textContent)
-    .to.equal('Vue Test')
-  })
-  it('adds a new todo item to list on enter', () => {
+  it('Should render correct contents with header class attributes', () => {
+    const HeaderComponent = mount(Header);
+    const headerDom = HeaderComponent.find('div')[0];
+
+    expect(headerDom.is('.header'))
+    .to.equal(true);
+  });
+  it('Adds a new todo item to list on enter', () => {
     const HeaderComponent = mount(Header);
 
     HeaderComponent.setData({
@@ -21,5 +22,5 @@ describe('Header.vue', () => {
     input.trigger('keydown.enter');
 
     expect(HeaderComponent.data().items).to.contain('test3');
-  })
+  });
 })
