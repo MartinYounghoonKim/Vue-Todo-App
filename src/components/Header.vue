@@ -6,7 +6,7 @@
 			autocomplete="off" 
 			placeholder="What needs to be done?" 
 			class="new-todo" 
-			@keydown="addTodos"
+			@keydown.enter="addTodos"
 		/>
     </div>
 </template>

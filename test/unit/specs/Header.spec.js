@@ -18,7 +18,7 @@ describe('Header.vue', () => {
     });
 
     const input = HeaderComponent.find('input')[0];
-    input.trigger('keydown');
+    input.trigger('keydown.enter');
 
     expect(HeaderComponent.data().items).to.contain('test3');
   })
