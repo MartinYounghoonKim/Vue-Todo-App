@@ -8,4 +8,9 @@ describe('Header.vue', () => {
     expect(vm.$el.querySelector('.header h1').textContent)
     .to.equal('Vue Test')
   })
+  it('adds a new todo item to list on enter', () => {
+    const Constructor = Vue.extend(Header);
+    const vm = new Constructor().$mount();
+    vm.newItem = 'brush my teeth';
+  })
 })
