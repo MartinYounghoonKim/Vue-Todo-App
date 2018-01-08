@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
+    "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
     "test": "npm run unit",
     "build": "node build/build.js"
   },
