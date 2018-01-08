@@ -4,8 +4,8 @@ import Vue from 'vue';
 import App from '@/App';
 
 describe('App.vue', () => {
+  const AppComponent = mount(App);
   it('Should render correct contents', () => {
-    const AppComponent = mount(App);
     expect(AppComponent.isVueComponent).to.equal(true);
-  })
+  });
 })
