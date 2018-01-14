@@ -25,13 +25,12 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
 
     import AppHeader from './components/Header.vue';
     import AppFooter from './components/Footer.vue';
     import TodoList from './components/TodoList.vue';
     import TODO from './constant/mutation-type';
-    import TodoApi from './api/api_core.js';
 
     export default {
         name: 'app',
@@ -46,8 +45,11 @@
             }
         },
         computed: {
+            ...mapGetters({
+                todoList: 'getTodoList'
+            }),
             viewTodos() {
-                return this.$store.state.todos.filter(todo => {
+                return this.todoList.filter(todo => {
                     switch (true) {
                         case this.currentLocation === '/all' || this.currentLocation === '/' :
                             return true;
@@ -63,11 +65,8 @@
                 })
             }
         },
-        beforeMount() {
-            TodoApi.get(`/`)
-                .then((result) => {
-                    this.$store.state.todos = result.data;
-                });
+        created () {
+            this.getTodoList();
         },
         methods: {
             addTodo(userValue) {
@@ -82,10 +81,10 @@
                 this.$store.dispatch(TODO.DELETE, {deleteTargetKey, targetKey});
             },
             completedTodo(checked, id) {
+                console.log(id)
                 const isDone = checked;
-                const primayKey = id;
 
-                this.$store.dispatch(TODO.COMPLETE, {isDone, primayKey});
+                this.$store.dispatch(TODO.COMPLETE, { isDone, id });
             },
             toggleAllTodo(toggleTodos) {
                 const isDoneAll = !this.$store.state.todos.every(v => v.isDone === true);
@@ -101,7 +100,10 @@
                     '',
                     this.currentLocation
                 )
-            }
+            },
+            ...mapActions({
+                getTodoList: TODO.LIST
+            })
         },
         components: {
             AppHeader,

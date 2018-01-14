@@ -1,4 +1,5 @@
 export default {
+    LIST: 'LIST_TODOS',
     ADD: 'ADD_TODOS',
     EDIT: 'EDIT_TODOS',
     DELETE: 'DELETE_TODOS',

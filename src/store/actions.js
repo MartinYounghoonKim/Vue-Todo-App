@@ -2,7 +2,13 @@ import axios from 'axios';
 import TODO from '../constant/mutation-type';
 import TodoApi from '../api/api_core';
 
-const todoActions = {
+export default {
+    [TODO.LIST] ({ commit }) {
+        TodoApi.get('/')
+            .then( res => {
+                commit( TODO.LIST, res.data );
+            })
+    },
 	[TODO.ADD] ({ commit }, payload) {
 		TodoApi.post(`/`,{
 			todo: payload
@@ -13,7 +19,7 @@ const todoActions = {
 	[TODO.EDIT] ({ commit }, payload) {
 		const targetKey = payload.id;
 		const editedTodo = payload.editedTodo;
-	
+
 		TodoApi.put(`/${targetKey}`, {
 			todo: editedTodo
 		})
@@ -24,7 +30,7 @@ const todoActions = {
 	[TODO.DELETE] ({ commit }, payload) {
 		const targetKey = payload.targetKey;
 		const deleteTargetKey =  payload.deleteTargetKey;
-	
+
 		TodoApi.delete(`/${targetKey}`)
 		.then((result)=>{
 			if(result.status===200){
@@ -33,18 +39,18 @@ const todoActions = {
 		})
 	},
 	[TODO.COMPLETE] (commit, payload) {
-		const primayKey = payload.primayKey;
-		const isDone = payload.isDone;
-		
+		const primayKey = payload.id;
+		const isDone = !payload.isDone;
+
 		TodoApi.put(`/${primayKey}`,{
 			isDone: isDone
 		})
 	},
 	[TODO.ALL_COMPLETE] ({ commit, state }, payload) {
 		const isCompleteAll = payload;
-	
+
 		axios.all(
-			state.todos.map( 
+			state.todos.map(
 				v=> TodoApi.put(v.id, { isDone: isCompleteAll })
 			)
 		)
@@ -53,5 +59,3 @@ const todoActions = {
 		})
 	}
 }
-
-export default todoActions;
