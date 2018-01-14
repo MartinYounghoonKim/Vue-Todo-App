@@ -1,7 +1,7 @@
 <template>
 <section class="main">
-    <input 
-        type="checkbox" 
+    <input
+        type="checkbox"
         class="toggle-all"
         @click="toggleAllTodo"
         :checked = "isAllChecked"
