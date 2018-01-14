@@ -8,7 +8,8 @@ import actions from './actions.js';
 Vue.use(Vuex);
 
 const state = {
-    todos: []
+    todos: [],
+    location: null
 };
 
 export const store = new Vuex.Store({

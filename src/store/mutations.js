@@ -1,6 +1,9 @@
 import TODO from '../constant/mutation-type';
 
 export default {
+    setCurrentLocation: (state, location) => {
+        state.location = location;
+    },
     [TODO.LIST](state, payload) {
         state.todos = payload;
     },

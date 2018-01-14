@@ -67,6 +67,7 @@
         },
         created () {
             this.getTodoList();
+            this.setCurrentLocation(this.currentLocation);
         },
         methods: {
             addTodo(userValue) {
@@ -102,7 +103,8 @@
                 )
             },
             ...mapActions({
-                getTodoList: TODO.LIST
+                getTodoList: TODO.LIST,
+                setCurrentLocation: 'setCurrentLocation'
             })
         },
         components: {

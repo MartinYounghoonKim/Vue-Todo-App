@@ -3,6 +3,9 @@ import TODO from '../constant/mutation-type';
 import TodoApi from '../api/api_core';
 
 export default {
+    setCurrentLocation: ({ commit }, location) => {
+        commit('setCurrentLocation', location);
+    },
     [TODO.LIST] ({ commit }) {
         TodoApi.get('/')
             .then( res => {
