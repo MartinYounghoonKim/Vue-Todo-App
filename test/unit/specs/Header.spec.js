@@ -16,6 +16,7 @@ describe('Header.vue', () => {
   });
   it('Adds a new todo item to list on enter', () => {
     const HeaderComponent = mount(Header);
+    const clickEvent = new window.Event('click');
 
     HeaderComponent.setData({
       newItem: 'test3'
