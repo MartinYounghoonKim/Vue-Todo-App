@@ -1,5 +1,4 @@
 import axios from 'axios';
-import TODO from "../constant/mutation-type";
 
 const todoApi = axios.create({
     baseURL: 'http://localhost:2403/todos',
@@ -21,7 +20,7 @@ export const updateTodoItem = (payload) => {
     const targetKey = payload.id;
     const editedTodo = payload.editedTodo;
 
-    todoApi.put(`${targetKey}`, {
+    return todoApi.put(`${targetKey}`, {
         todo: editedTodo
     })
 };
@@ -30,8 +29,8 @@ export const deleteTodoItem = (payload) => {
     const targetKey = payload.targetKey;
     const deleteTargetKey =  payload.deleteTargetKey;
 
-    todoApi.delete(`${targetKey}`)
-}
+    return todoApi.delete(`${targetKey}`)
+};
 
 export const completeTodo = (payload) => {
     const primayKey = payload.id;
@@ -40,7 +39,4 @@ export const completeTodo = (payload) => {
     todoApi.put(`/${primayKey}`,{
         isDone: isDone
     })
-}
-
-export default completedAllTodos = (isCompletedAll) => {
-}
+};

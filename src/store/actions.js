@@ -1,53 +1,36 @@
 import axios from 'axios';
 import TODO from '../constant/mutation-type';
 import TodoApi from '../api/todoAPI';
+import { getTodoList, setTodoItem, updateTodoItem, deleteTodoItem, completeTodo } from '../api/todoAPI';
 
 export default {
     setCurrentLocation: ({ commit }, location) => {
         commit('setCurrentLocation', location);
     },
     [TODO.LIST] ({ commit }) {
-        TodoApi.get('/')
-            .then( res => {
-                commit( TODO.LIST, res.data );
-            })
+        getTodoList().then( res => {
+            commit( TODO.LIST, res.data );
+        });
     },
-	[TODO.ADD] ({ commit }, payload) {
-		TodoApi.post(`/`,{
-			todo: payload
-		}).then((result)=>{
-			commit(TODO.ADD, result.data)
-		})
+	[TODO.ADD] ({ commit }, todoItem) {
+        setTodoItem(todoItem).then( res => {
+            commit(TODO.ADD, res.data);
+        });
 	},
 	[TODO.EDIT] ({ commit }, payload) {
-		const targetKey = payload.id;
-		const editedTodo = payload.editedTodo;
-
-		TodoApi.put(`/${targetKey}`, {
-			todo: editedTodo
-		})
-		.then((result)=>{
-			commit(TODO.EDIT, result.data );
-		})
+        updateTodoItem(payload).then( res => {
+            commit(TODO.EDIT, res.data );
+        });
 	},
 	[TODO.DELETE] ({ commit }, payload) {
-		const targetKey = payload.targetKey;
 		const deleteTargetKey =  payload.deleteTargetKey;
 
-		TodoApi.delete(`/${targetKey}`)
-		.then((result)=>{
-			if(result.status===200){
-				commit(TODO.DELETE, deleteTargetKey);
-			}
-		})
+        deleteTodoItem(payload).then( res => {
+            commit(TODO.DELETE, deleteTargetKey);
+        });
 	},
 	[TODO.COMPLETE] (commit, payload) {
-		const primayKey = payload.id;
-		const isDone = !payload.isDone;
-
-		TodoApi.put(`/${primayKey}`,{
-			isDone: isDone
-		})
+        completeTodo(payload);
 	},
 	[TODO.ALL_COMPLETE] ({ commit, state }, payload) {
 		const isCompleteAll = payload;

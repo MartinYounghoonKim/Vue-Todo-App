@@ -65,11 +65,21 @@
     .todo-list li.editing {
         border-bottom: none;
         padding: 0;
+    }
 
+    .todo-list li.editing .view {
+        display: none;
     }
 
     .todo-list li .edit {
+        display: none;
+    }
+
+    .todo-list li.editing .edit{
         display: block;
+        width: 506px;
+        padding: 13px 17px 12px 17px;
+        margin: 0 0 0 43px;
     }
 
     .todo-list li:last-child {
