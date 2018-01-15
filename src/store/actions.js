@@ -1,6 +1,6 @@
 import axios from 'axios';
 import TODO from '../constant/mutation-type';
-import TodoApi from '../api/api_core';
+import TodoApi from '../api/todoAPI';
 
 export default {
     setCurrentLocation: ({ commit }, location) => {
