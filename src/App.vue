@@ -6,7 +6,7 @@
                 @addTodo="addTodo"
             />
             <todo-list
-                :todos="viewTodos"
+                :todos="todoList"
                 @deleteTodo="deleteTodo"
                 @completedTodo="completedTodo"
                 @editTodo="editTodo"
@@ -37,33 +37,18 @@
         data() {
             return {
                 currentLocation: window.location.pathname,
-                todoFilters: [
-                    '/all',
-                    '/active',
-                    '/completed'
-                ]
+                todoFilters: [ '/all', '/active', '/completed' ]
+            }
+        },
+        watch: {
+            currentLocation () {
+                this.setCurrentLocation(this.currentLocation);
             }
         },
         computed: {
             ...mapGetters({
                 todoList: 'getTodoList'
-            }),
-            viewTodos() {
-                return this.todoList.filter(todo => {
-                    switch (true) {
-                        case this.currentLocation === '/all' || this.currentLocation === '/' :
-                            return true;
-                            break;
-                        case this.currentLocation === '/active' && !todo.isDone :
-                            return true;
-                            break;
-                        case this.currentLocation === '/completed' && todo.isDone :
-                            return true;
-                            break;
-                    }
-
-                })
-            }
+            })
         },
         created () {
             this.getTodoList();

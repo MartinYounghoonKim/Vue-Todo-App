@@ -6,7 +6,22 @@ const todoGetters = {
 		return state.todos.filter( v=> v.isDone === true ).length;
 	},
     getTodoList (state) {
-	    return state.todos;
+	    const currentLocation = state.location;
+
+        return state.todos.filter(todo => {
+            switch (true) {
+                case currentLocation === '/all' || currentLocation === '/' :
+                    return true;
+                    break;
+                case currentLocation === '/active' && !todo.isDone :
+                    return true;
+                    break;
+                case currentLocation === '/completed' && todo.isDone :
+                    return true;
+                    break;
+            }
+
+        })
     }
 };
 
