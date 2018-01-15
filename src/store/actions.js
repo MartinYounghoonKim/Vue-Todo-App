@@ -1,7 +1,7 @@
 import axios from 'axios';
 import TODO from '../constant/mutation-type';
 import TodoApi from '../api/todoAPI';
-import { getTodoList, setTodoItem, updateTodoItem, deleteTodoItem, completeTodo } from '../api/todoAPI';
+import { getTodoList, setTodoItem, updateTodoItem, deleteTodoItem, completeTodo, completeAllTodos } from '../api/todoAPI';
 
 export default {
     setCurrentLocation: ({ commit }, location) => {
@@ -32,16 +32,20 @@ export default {
 	[TODO.COMPLETE] (commit, payload) {
         completeTodo(payload);
 	},
-	[TODO.ALL_COMPLETE] ({ commit, state }, payload) {
-		const isCompleteAll = payload;
+	[TODO.ALL_COMPLETE] ({ commit, state }) {
+        const isCompleteAll = !state.todos.every(v => v.isDone === true);
+        completeAllTodos(state.todos, isCompleteAll);
 
-		axios.all(
-			state.todos.map(
-				v=> TodoApi.put(v.id, { isDone: isCompleteAll })
-			)
-		)
-		.then((result)=>{
-				commit(TODO.ALL_COMPLETE, result );
-		})
+        const payload = Object.assign(state.todos, isCompleteAll);
+        console.log(payload)
+
+		// axios.all(
+		// 	state.todos.map(
+		// 		v => TodoApi.put(v.id, { isDone: isCompleteAll })
+		// 	)
+		// )
+		// .then((result)=>{
+		// 		commit(TODO.ALL_COMPLETE, result );
+		// })
 	}
 }

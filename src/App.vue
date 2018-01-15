@@ -67,15 +67,12 @@
                 this.$store.dispatch(TODO.DELETE, {deleteTargetKey, targetKey});
             },
             completedTodo(checked, id) {
-                console.log(id)
                 const isDone = checked;
 
                 this.$store.dispatch(TODO.COMPLETE, { isDone, id });
             },
             toggleAllTodo(toggleTodos) {
-                const isDoneAll = !this.$store.state.todos.every(v => v.isDone === true);
-
-                this.$store.dispatch(TODO.ALL_COMPLETE, isDoneAll);
+                this.$store.dispatch(TODO.ALL_COMPLETE);
             },
             changeLocation(currentLocation) {
                 if (currentLocation.length < 0) return false;

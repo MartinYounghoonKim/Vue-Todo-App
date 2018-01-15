@@ -27,7 +27,6 @@ export const updateTodoItem = (payload) => {
 
 export const deleteTodoItem = (payload) => {
     const targetKey = payload.targetKey;
-    const deleteTargetKey =  payload.deleteTargetKey;
 
     return todoApi.delete(`${targetKey}`)
 };
@@ -40,3 +39,7 @@ export const completeTodo = (payload) => {
         isDone: isDone
     })
 };
+
+export const completeAllTodos = (payload) => {
+    console.log(payload)
+}
