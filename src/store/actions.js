@@ -34,18 +34,10 @@ export default {
 	},
 	[TODO.ALL_COMPLETE] ({ commit, state }) {
         const isCompleteAll = !state.todos.every(v => v.isDone === true);
-        completeAllTodos(state.todos, isCompleteAll);
+        const payload = Object.assign( { todos: state.todos} , { isCompleteAll } );
 
-        const payload = Object.assign(state.todos, isCompleteAll);
-        console.log(payload)
-
-		// axios.all(
-		// 	state.todos.map(
-		// 		v => TodoApi.put(v.id, { isDone: isCompleteAll })
-		// 	)
-		// )
-		// .then((result)=>{
-		// 		commit(TODO.ALL_COMPLETE, result );
-		// })
+        completeAllTodos(payload).then( res => {
+            commit(TODO.ALL_COMPLETE, res );
+        })
 	}
 }
