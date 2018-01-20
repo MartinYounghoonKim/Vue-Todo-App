@@ -12,7 +12,6 @@
                 @deleteTodo="deleteTodo"
                 @completedTodo="completedTodo"
                 @editTodo="editTodo"
-                :currentLocation="currentLocation"
                 @toggleAllTodo="toggleAllTodo"
             />
             <app-footer
@@ -83,10 +82,10 @@
                     this.currentLocation
                 )
             },
-            ...mapActions({
-                getTodoList: 'getTodoList',
-                setCurrentLocation: 'setCurrentLocation'
-            })
+            ...mapActions([
+                'getTodoList',
+                'setCurrentLocation'
+            ])
         },
         components: {
             AppHeader,

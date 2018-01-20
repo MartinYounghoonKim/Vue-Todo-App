@@ -35,7 +35,6 @@ export default{
         'isAllChecked'
     ]),
     props: {
-        currentLocation: String,
         todos: Array
     },
     components: {
