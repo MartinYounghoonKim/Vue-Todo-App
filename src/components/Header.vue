@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <h1>Vue Test</h1>
+        <h1>Todo App</h1>
         <input
             autofocus="autofocus"
             autocomplete="off"

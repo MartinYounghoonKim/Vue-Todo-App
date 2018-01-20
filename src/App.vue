@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <img src="./assets/logo.png">
+        <div class="image-wrapper">
+            <img src="./assets/logo.png">
+        </div>
         <div class="todoapp">
             <app-header
                 @addTodo="addTodo"
@@ -142,6 +144,9 @@
 
     .hidden {
         display: none;
+    }
+    .image-wrapper{
+        text-align: center;
     }
 
     .todoapp {
