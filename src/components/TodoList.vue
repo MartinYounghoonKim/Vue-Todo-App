@@ -1,70 +1,25 @@
 <template>
 <section class="main">
-    <input
-        type="checkbox"
-        class="toggle-all"
-        @click="toggleAllTodo"
-        :checked = "isAllChecked"
-    />
+    <input type="checkbox" class="toggle-all"/>
     <ul class="todo-list">
         <todo
             v-for="todo in todos"
             :todo="todo"
             :key="todo.key"
-            @deleteTodo="deleteTodo"
-            @checkTodo="checkTodo"
-            :isEditing="isEditing"
-            @startEdit="startEdit"
-            @finishEdit="finishEdit"
         />
     </ul>
 </section>
 </template>
 <script>
 import Todo from './Todo.vue';
-import { mapGetters } from 'vuex';
 
 export default{
     name: 'TodoList',
-    data () {
-        return {
-            isEditing: ''
-        }
-    },
-    computed: mapGetters([
-        'isAllChecked'
-    ]),
     props: {
         todos: Array
     },
     components: {
         Todo
-    },
-    methods: {
-        deleteTodo (deleteTargetKey) {
-            this.$emit('deleteTodo', deleteTargetKey);
-        },
-        checkTodo (isDone, id) {
-            this.$emit('completedTodo', isDone, id);
-        },
-        startEdit (editingTarget) {
-            this.isEditing = editingTarget;
-        },
-        finishEdit (id, todo) {
-            const targetId = id;
-            const editedTodo = todo;
-
-            if(this.isEditing.length<=0){
-                return false;
-            }
-            this.$emit('editTodo', targetId, editedTodo);
-            this.isEditing = '';
-        },
-        toggleAllTodo (e) {
-            const isChecked = !e.target.checked;
-
-            this.$emit('toggleAllTodo', isChecked)
-        }
     }
 }
 </script>

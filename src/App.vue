@@ -4,33 +4,16 @@
             <img src="./assets/logo.png">
         </div>
         <div class="todoapp">
-            <app-header
-                @addTodo="addTodo"
-            />
             <todo-list
                 :todos="todoList"
-                @deleteTodo="deleteTodo"
-                @completedTodo="completedTodo"
-                @editTodo="editTodo"
-                @toggleAllTodo="toggleAllTodo"
-            />
-            <app-footer
-                :todoFilters="todoFilters"
-                :currentLocation="currentLocation"
-                @changeLocation="changeLocation"
             />
         </div>
-    </div>
     </div>
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex';
-
-    import AppHeader from './components/Header.vue';
-    import AppFooter from './components/Footer.vue';
+    import { mapActions, mapGetters } from 'vuex';
     import TodoList from './components/TodoList.vue';
-    import TODO from './constant/mutation-type';
 
     export default {
         name: 'app',
@@ -55,23 +38,6 @@
             this.setCurrentLocation(this.currentLocation);
         },
         methods: {
-            addTodo(userValue) {
-                this.$store.dispatch('addTodo', userValue)
-            },
-            editTodo(id, editedTodo) {
-                this.$store.dispatch('editTodo', {id, editedTodo});
-            },
-            deleteTodo(targetKey) {
-                this.$store.dispatch('deleteTodo', targetKey);
-            },
-            completedTodo(checked, id) {
-                const isDone = checked;
-
-                this.$store.dispatch('completeTodo', {isDone, id});
-            },
-            toggleAllTodo() {
-                this.$store.dispatch('completeAllTodos');
-            },
             changeLocation(currentLocation) {
                 if (currentLocation.length < 0) return false;
                 this.currentLocation = currentLocation;
@@ -88,8 +54,6 @@
             ])
         },
         components: {
-            AppHeader,
-            AppFooter,
             TodoList
         }
     }

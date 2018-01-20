@@ -1,27 +1,19 @@
 <template>
-    <li :class="{ completed:todo.isDone, editing:this.isEditing == this.todo.id, todo }">
+    <li>
         <div class="view">
             <input
                 type="checkbox"
                 class="toggle"
                 v-model="todo.isDone"
-                @click="checkeTodo"
             >
-            <label
-                @dblclick="startEdit"
-            >{{ todo.todo }}</label>
-            <button
-                class="destroy"
-                @click="deleteTodo"
-            ></button>
+            <label>{{ todo.todo }}</label>
+            <button class="destroy"></button>
         </div>
         <input
             ref="editInput"
             type="text"
             class="edit"
             :value="this.todo.todo"
-            @blur="finishEdit"
-            @keyup.13="finishEdit"
         />
     </li>
 </template>
@@ -29,25 +21,7 @@
     export default {
         name: 'Todo',
         props: {
-            todo: Object,
-            isEditing: String,
-            currentLocation: String
-        },
-        methods: {
-            deleteTodo(e) {
-                this.$emit('deleteTodo', this.todo.id);
-            },
-            checkeTodo(e) {
-                this.$emit("checkTodo", this.todo.isDone, this.todo.id);
-            },
-            startEdit() {
-                this.$emit('startEdit', this.todo.id);
-                setTimeout(() => this.$refs.editInput.focus());
-            },
-            finishEdit(e) {
-                const editedText = e.target.value;
-                this.$emit('finishEdit', this.todo.id, editedText);
-            }
+            todo: Object
         }
     }
 </script>
