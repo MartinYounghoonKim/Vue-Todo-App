@@ -47,15 +47,4 @@ export const completeAllTodos = (payload) => {
     return axios.all(
         todos.map( todo => todoApi.put(`${todo.id}`, { isDone: isCompleteAll }))
     )
-}
-
-/**
- * // axios.all(
- // 	state.todos.map(
- // 		v => TodoApi.put(v.id, { isDone: isCompleteAll })
- // 	)
- // )
- // .then((result)=>{
-		//
-		// })
- */
+};
