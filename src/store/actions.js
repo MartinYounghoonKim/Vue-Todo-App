@@ -1,38 +1,36 @@
-import axios from 'axios';
 import TODO from '../constant/mutation-type';
-import TodoApi from '../api/todoAPI';
 import { getTodoList, setTodoItem, updateTodoItem, deleteTodoItem, completeTodo, completeAllTodos } from '../api/todoAPI';
 
 export default {
     setCurrentLocation: ({ commit }, location) => {
         commit('setCurrentLocation', location);
     },
-    [TODO.LIST] ({ commit }) {
+    getTodoList: ({ commit }) => {
         getTodoList().then( res => {
             commit( TODO.LIST, res.data );
         });
     },
-	[TODO.ADD] ({ commit }, todoItem) {
+	addTodo: ({ commit }, todoItem) => {
         setTodoItem(todoItem).then( res => {
             commit(TODO.ADD, res.data);
         });
 	},
-	[TODO.EDIT] ({ commit }, payload) {
+	editTodo: ({ commit }, payload) => {
         updateTodoItem(payload).then( res => {
             commit(TODO.EDIT, res.data );
         });
 	},
-	[TODO.DELETE] ({ commit }, payload) {
-		const deleteTargetKey =  payload.deleteTargetKey;
+	deleteTodo: ({ commit, state }, targetKey) => {
+		const deleteTargetKey =  state.todos.findIndex( v => targetKey === v.id);
 
-        deleteTodoItem(payload).then( res => {
+        deleteTodoItem(targetKey).then( res => {
             commit(TODO.DELETE, deleteTargetKey);
         });
 	},
-	[TODO.COMPLETE] (commit, payload) {
+	completeTodo: (commit, payload) => {
         completeTodo(payload);
 	},
-	[TODO.ALL_COMPLETE] ({ commit, state }) {
+	completeAllTodos: ({ commit, state }) => {
         const isCompleteAll = !state.todos.every(v => v.isDone === true);
         const payload = Object.assign( { todos: state.todos} , { isCompleteAll } );
 

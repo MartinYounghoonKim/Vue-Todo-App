@@ -25,9 +25,7 @@ export const updateTodoItem = (payload) => {
     })
 };
 
-export const deleteTodoItem = (payload) => {
-    const targetKey = payload.targetKey;
-
+export const deleteTodoItem = (targetKey) => {
     return todoApi.delete(`${targetKey}`)
 };
 

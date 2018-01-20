@@ -1,14 +1,14 @@
-const todoGetters = {
-	isAllChecked (state) {
-		return state.todos.every( todo => todo.isDone === true);
+export default {
+	isAllChecked (states) {
+		return states.todos.every( todo => todo.isDone === true);
 	},
-	getTodosCounter (state) {
-		return state.todos.filter( v=> v.isDone === true ).length;
+	getTodosCounter (states) {
+		return states.todos.filter( v=> v.isDone === true ).length;
 	},
-    getTodoList (state) {
-	    const currentLocation = state.location;
+    getTodoList (states) {
+	    const currentLocation = states.location;
 
-        return state.todos.filter(todo => {
+        return states.todos.filter(todo => {
             switch (true) {
                 case currentLocation === '/all' || currentLocation === '/' :
                     return true;
@@ -24,5 +24,3 @@ const todoGetters = {
         })
     }
 };
-
-export default todoGetters;

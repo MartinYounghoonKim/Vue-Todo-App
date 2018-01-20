@@ -28,15 +28,14 @@
         name: 'Footer',
         props: {
             todoFilters: Array,
-            currentLocation: String,
-            leftItems: Number
+            currentLocation: String
         },
         computed: {
             ...mapGetters([
                 'getTodosCounter'
             ]),
             itemText() {
-                return this.leftItems > 1 ? 'items' : 'item'
+                return this.getTodosCounter > 1 ? 'items' : 'item'
             }
         },
         methods: {

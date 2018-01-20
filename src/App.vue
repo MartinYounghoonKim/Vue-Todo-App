@@ -19,7 +19,6 @@
                 :todoFilters="todoFilters"
                 :currentLocation="currentLocation"
                 @changeLocation="changeLocation"
-                :leftItems="this.$store.state.todos.filter( v => v.isDone === true).length"
             />
         </div>
     </div>
@@ -27,7 +26,7 @@
 </template>
 
 <script>
-    import { mapActions, mapGetters } from 'vuex';
+    import {mapActions, mapGetters} from 'vuex';
 
     import AppHeader from './components/Header.vue';
     import AppFooter from './components/Footer.vue';
@@ -39,11 +38,11 @@
         data() {
             return {
                 currentLocation: window.location.pathname,
-                todoFilters: [ '/all', '/active', '/completed' ]
+                todoFilters: ['/all', '/active', '/completed']
             }
         },
         watch: {
-            currentLocation () {
+            currentLocation() {
                 this.setCurrentLocation(this.currentLocation);
             }
         },
@@ -52,29 +51,27 @@
                 todoList: 'getTodoList'
             })
         },
-        created () {
+        created() {
             this.getTodoList();
             this.setCurrentLocation(this.currentLocation);
         },
         methods: {
             addTodo(userValue) {
-                this.$store.dispatch(TODO.ADD, userValue)
+                this.$store.dispatch('addTodo', userValue)
             },
             editTodo(id, editedTodo) {
-                this.$store.dispatch(TODO.EDIT, {id, editedTodo});
+                this.$store.dispatch('editTodo', {id, editedTodo});
             },
             deleteTodo(targetKey) {
-                const deleteTargetKey = this.$store.state.todos.findIndex(v => targetKey === v.id);
-
-                this.$store.dispatch(TODO.DELETE, {deleteTargetKey, targetKey});
+                this.$store.dispatch('deleteTodo', targetKey);
             },
             completedTodo(checked, id) {
                 const isDone = checked;
 
-                this.$store.dispatch(TODO.COMPLETE, { isDone, id });
+                this.$store.dispatch('completeTodo', {isDone, id});
             },
-            toggleAllTodo(toggleTodos) {
-                this.$store.dispatch(TODO.ALL_COMPLETE);
+            toggleAllTodo() {
+                this.$store.dispatch('completeAllTodos');
             },
             changeLocation(currentLocation) {
                 if (currentLocation.length < 0) return false;
@@ -87,7 +84,7 @@
                 )
             },
             ...mapActions({
-                getTodoList: TODO.LIST,
+                getTodoList: 'getTodoList',
                 setCurrentLocation: 'setCurrentLocation'
             })
         },
@@ -145,7 +142,8 @@
     .hidden {
         display: none;
     }
-    .image-wrapper{
+
+    .image-wrapper {
         text-align: center;
     }
 

@@ -4,22 +4,22 @@ export default {
     setCurrentLocation: (state, location) => {
         state.location = location;
     },
-    [TODO.LIST](state, payload) {
-        state.todos = payload;
+    [TODO.LIST](states, payload) {
+        states.todos = payload;
     },
-    [TODO.ADD](state, payload) {
-        state.todos = [...state.todos, payload];
+    [TODO.ADD](states, payload) {
+        states.todos = [...states.todos, payload];
     },
-    [TODO.EDIT](state, payload) {
+    [TODO.EDIT](states, payload) {
         const targetKey = payload.id;
         const editedTodo = payload.editedTodo;
 
-        state.todos.splice(state.todos.findIndex(v => v.id === targetKey), 1, payload);
+        states.todos.splice(states.todos.findIndex(v => v.id === targetKey), 1, payload);
     },
-    [TODO.DELETE](state, deleteTargetKey) {
-        state.todos.splice(deleteTargetKey, 1);
+    [TODO.DELETE](states, deleteTargetKey) {
+        states.todos.splice(deleteTargetKey, 1);
     },
-    [TODO.ALL_COMPLETE](state, payload) {
-        state.todos = payload.map(v => v.data);
+    [TODO.ALL_COMPLETE](states, payload) {
+        states.todos = payload.map(v => v.data);
     }
 }
