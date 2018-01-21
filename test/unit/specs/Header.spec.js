@@ -1,6 +1,10 @@
 require('es6-promise').polyfill();
 
 import { mount } from 'avoriaz';
+import chai from 'chai';
+import sinonChai from 'sinon-chai';
+
+chai.use(sinonChai);
 
 import Header from '@/components/Header';
 
@@ -12,17 +16,20 @@ describe('Header.vue', () => {
 
         expect(headerDom.hasClass('header')).to.equal(true);
     });
-    it('Adds a new todo item to list on enter', () => {
+
+    it('Should add a new todo item and after that deleted text field', () => {
+        const newItem = 'Todo Item01';
         const HeaderComponent = mount(Header);
-        const clickEvent = new window.Event('click');
+        const inputField = HeaderComponent.find('input')[0];
 
-        HeaderComponent.setData({
-            newItem: 'test3'
-        });
+        HeaderComponent.setData({ newItem });
 
-        const input = HeaderComponent.find('input')[0];
-        input.trigger('keydown.enter');
+        const event = sinon.spy();
+        HeaderComponent.vm.$on( 'addTodo', event );
 
-        expect(HeaderComponent.data().items).to.contain('test3');
-    });
+        inputField.trigger('keydown.enter');
+
+        expect(HeaderComponent.data().newItem).to.equal('');
+        expect(event.calledOnce).to.equal(true);
+    })
 })

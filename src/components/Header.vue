@@ -16,18 +16,13 @@
         data() {
             return {
                 newItem: '',
-                items: ['test1', 'test2']
             }
         },
         methods: {
-            addTodos(e) {
-                this.items.push(this.newItem);
-                const textElement = e.target;
-                const userValue = textElement.value;
-
-                if (userValue.length) {
-                    this.$emit('addTodo', userValue);
-                    textElement.value = '';
+            addTodos() {
+                if (this.newItem.length) {
+                    this.$emit('addTodo', this.newItem);
+                    this.newItem = '';
                 }
             }
         }
