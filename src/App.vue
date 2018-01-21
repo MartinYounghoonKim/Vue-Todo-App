@@ -4,6 +4,9 @@
             <img src="./assets/logo.png">
         </div>
         <div class="todoapp">
+            <app-header
+                @addTodo="addTodo"
+            />
             <todo-list
                 :todos="todoList"
             />
@@ -13,6 +16,8 @@
 
 <script>
     import { mapActions, mapGetters } from 'vuex';
+
+    import AppHeader from './components/Header.vue';
     import TodoList from './components/TodoList.vue';
 
     export default {
@@ -38,6 +43,9 @@
             this.setCurrentLocation(this.currentLocation);
         },
         methods: {
+            addTodo(userValue) {
+                this.$store.dispatch('addTodo', userValue)
+            },
             changeLocation(currentLocation) {
                 if (currentLocation.length < 0) return false;
                 this.currentLocation = currentLocation;
@@ -54,6 +62,7 @@
             ])
         },
         components: {
+            AppHeader,
             TodoList
         }
     }
