@@ -7,7 +7,10 @@
                 v-model="todo.isDone"
             >
             <label>{{ todo.todo }}</label>
-            <button class="destroy"></button>
+            <button
+                class="destroy"
+                @click="deleteTodo"
+            ></button>
         </div>
         <input
             ref="editInput"
@@ -22,6 +25,11 @@
         name: 'Todo',
         props: {
             todo: Object
+        },
+        methods: {
+            deleteTodo() {
+                this.$emit('deleteTodo', this.todo.id);
+            }
         }
     }
 </script>

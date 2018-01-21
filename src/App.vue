@@ -9,6 +9,7 @@
             />
             <todo-list
                 :todos="todoList"
+                @deleteTodo="deleteTodo"
             />
         </div>
     </div>
@@ -55,6 +56,9 @@
                     '',
                     this.currentLocation
                 )
+            },
+            deleteTodo(targetKey) {
+                this.$store.dispatch('deleteTodo', targetKey);
             },
             ...mapActions([
                 'getTodoList',
