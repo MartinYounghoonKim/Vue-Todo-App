@@ -10,6 +10,7 @@
             <todo-list
                 :todos="todoList"
                 @deleteTodo="deleteTodo"
+                @editTodo="editTodo"
             />
         </div>
     </div>
@@ -59,6 +60,9 @@
             },
             deleteTodo(targetKey) {
                 this.$store.dispatch('deleteTodo', targetKey);
+            },
+            editTodo(id, editedTodo) {
+                this.$store.dispatch('editTodo', {id, editedTodo});
             },
             ...mapActions([
                 'getTodoList',

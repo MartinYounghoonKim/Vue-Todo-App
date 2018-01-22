@@ -7,6 +7,8 @@
             :todo="todo"
             :key="todo.key"
             @deleteTodo="deleteTodo"
+            @startEdit="startEdit"
+            @finishEdit="finishEdit"
         />
     </ul>
 </section>
@@ -23,6 +25,18 @@ export default{
         deleteTodo (deleteTargetKey) {
             this.$emit('deleteTodo', deleteTargetKey);
         },
+        startEdit (editingTarget) {
+            this.isEditing = editingTarget;
+        },
+        finishEdit (id, todo) {
+            const targetId = id;
+            const editedTodo = todo;
+            if(this.isEditing.length<=0){
+                return false;
+            }
+            this.$emit('editTodo', targetId, editedTodo);
+            this.isEditing = '';
+        }
     },
     components: {
         Todo
