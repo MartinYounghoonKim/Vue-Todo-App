@@ -34,7 +34,6 @@
                 this.$emit('deleteTodo', this.todo.id);
             },
             startEdit() {
-                console.log(1);
                 this.$emit('startEdit', this.todo.id);
                 setTimeout(() => this.$refs.editInput.focus());
             },
