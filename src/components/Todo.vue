@@ -1,12 +1,12 @@
 <template>
-    <li>
+    <li :class="{ completed:todo.isDone, editing:this.isEditing == this.todo.id, todo }">
         <div class="view">
             <input
                 type="checkbox"
                 class="toggle"
                 v-model="todo.isDone"
             >
-            <label>{{ todo.todo }}</label>
+            <label @dblclick="startEdit">{{ todo.todo }}</label>
             <button
                 class="destroy"
                 @click="deleteTodo"
@@ -17,6 +17,8 @@
             type="text"
             class="edit"
             :value="this.todo.todo"
+            @blur="finishEdit"
+            @keyup.13="finishEdit"
         />
     </li>
 </template>
@@ -24,11 +26,21 @@
     export default {
         name: 'Todo',
         props: {
-            todo: Object
+            todo: Object,
+            isEditing: String,
         },
         methods: {
             deleteTodo() {
                 this.$emit('deleteTodo', this.todo.id);
+            },
+            startEdit() {
+                console.log(1);
+                this.$emit('startEdit', this.todo.id);
+                setTimeout(() => this.$refs.editInput.focus());
+            },
+            finishEdit(e) {
+                const editedText = e.target.value;
+                this.$emit('finishEdit', this.todo.id, editedText);
             }
         }
     }
