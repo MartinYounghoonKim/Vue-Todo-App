@@ -4,8 +4,11 @@
     <ul class="todo-list">
         <todo
             v-for="todo in todos"
+
             :todo="todo"
             :key="todo.key"
+            :isEditing="isEditing"
+
             @deleteTodo="deleteTodo"
             @startEdit="startEdit"
             @finishEdit="finishEdit"
@@ -20,6 +23,11 @@ export default{
     name: 'TodoList',
     props: {
         todos: Array
+    },
+    data () {
+        return {
+            isEditing: ''
+        }
     },
     methods: {
         deleteTodo (deleteTargetKey) {
