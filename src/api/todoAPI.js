@@ -7,13 +7,27 @@ const todoApi = axios.create({
 });
 
 export const getTodoList = () => {
-    return todoApi.get('/');
+    // localStorage.setItem('todos', JSON.stringify( [{ id: 100, todo: 'test', isDone: false }] ) );
+    return new Promise( resolve => {
+        resolve({ data: JSON.parse(localStorage.todos) });
+    })
 };
 
 export const setTodoItem = ( todo ) => {
-    return todoApi.post('/', {
-        todo
-    })
+    const todos = JSON.parse(localStorage.todos);
+    todos.push( {id: 100, todo, isDone: false } );
+
+    localStorage.setItem('todos', JSON.stringify( todos ) );
+
+    return new Promise( resolve => {
+        resolve({
+            data: {
+                id: 100,
+                todo,
+                isDone: false
+            }
+        })
+    });
 };
 
 export const updateTodoItem = (payload) => {
