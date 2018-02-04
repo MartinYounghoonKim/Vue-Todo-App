@@ -5,9 +5,10 @@ const todoApi = axios.create({
     timeout: 1000,
     responseType: 'json'
 });
-
 export const getTodoList = () => {
-    // localStorage.setItem('todos', JSON.stringify( [{ id: 100, todo: 'test', isDone: false }] ) );
+    if (!localStorage.todos) {
+        localStorage.setItem('todos', JSON.stringify( [] ) );
+    }
     return new Promise( resolve => {
         resolve({ data: JSON.parse(localStorage.todos) });
     })
@@ -15,9 +16,9 @@ export const getTodoList = () => {
 
 export const setTodoItem = ( todo ) => {
     const todos = JSON.parse(localStorage.todos);
-    var number = Math.random() // 0.9394456857981651
-    number.toString(36); // '0.xtis06h6'
-    var id = number.toString(36).substr(2, 9); // 'xtis06h6'
+    var number = Math.random();
+    number.toString(36);
+    var id = number.toString(36).substr(2, 9);
     todos.push( { id, todo, isDone: false } );
 
     localStorage.setItem('todos', JSON.stringify( todos ) );
@@ -34,18 +35,21 @@ export const setTodoItem = ( todo ) => {
 };
 
 export const updateTodoItem = (payload) => {
+    const todos = JSON.parse(localStorage.todos);
     const targetKey = payload.id;
     const editedTodo = payload.editedTodo;
 
-    // return new Promise( resolve => {
-    //     resolve({
-    //
-    //     })
-    // })
+    const editedTodoIndex = todos.findIndex(v => v.id === targetKey);
+    const todo = todos[editedTodoIndex];
+    todo.todo = editedTodo;
 
-    return todoApi.put(`${targetKey}`, {
-        todo: editedTodo
-    })
+    todos.splice(editedTodoIndex, 1, todo);
+    localStorage.setItem('todos', JSON.stringify( todos ) );
+    return new Promise( resolve => {
+        resolve({
+            data: todo
+        })
+    });
 };
 
 export const deleteTodoItem = (targetKey) => {
