@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
     "test": "npm run unit",
-    "build": "node build/build.js"
+    "build": "node build/build.js & dpd create db"
   },
   "dependencies": {
     "vue": "^2.5.2",
