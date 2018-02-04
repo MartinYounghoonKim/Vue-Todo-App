@@ -63,17 +63,25 @@ export const deleteTodoItem = (targetKey) => {
 };
 
 export const completeTodo = (payload) => {
+    const todos = JSON.parse(localStorage.todos);
     const primayKey = payload.id;
     const isDone = !payload.isDone;
 
-    todoApi.put(`/${primayKey}`,{
-        isDone: isDone
-    })
+    const editedTodoIndex = todos.findIndex(v => v.id === primayKey);
+    const todo = todos[editedTodoIndex];
+    todo.isDone = isDone;
+    todos.splice(editedTodoIndex, 1, todo);
+    localStorage.setItem('todos', JSON.stringify( todos ) );
+
+    return new Promise( resolve => {
+        resolve({
+            data: todo
+        })
+    });
 };
 
 export const completeAllTodos = (payload) => {
     const { isCompleteAll, todos } = payload;
-    console.log( todoApi.all );
 
     return axios.all(
         todos.map( todo => todoApi.put(`${todo.id}`, { isDone: isCompleteAll }))
