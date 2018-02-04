@@ -15,14 +15,17 @@ export const getTodoList = () => {
 
 export const setTodoItem = ( todo ) => {
     const todos = JSON.parse(localStorage.todos);
-    todos.push( {id: 100, todo, isDone: false } );
+    var number = Math.random() // 0.9394456857981651
+    number.toString(36); // '0.xtis06h6'
+    var id = number.toString(36).substr(2, 9); // 'xtis06h6'
+    todos.push( { id, todo, isDone: false } );
 
     localStorage.setItem('todos', JSON.stringify( todos ) );
 
     return new Promise( resolve => {
         resolve({
             data: {
-                id: 100,
+                id,
                 todo,
                 isDone: false
             }
@@ -34,13 +37,25 @@ export const updateTodoItem = (payload) => {
     const targetKey = payload.id;
     const editedTodo = payload.editedTodo;
 
+    // return new Promise( resolve => {
+    //     resolve({
+    //
+    //     })
+    // })
+
     return todoApi.put(`${targetKey}`, {
         todo: editedTodo
     })
 };
 
 export const deleteTodoItem = (targetKey) => {
-    return todoApi.delete(`${targetKey}`)
+    const todos = JSON.parse(localStorage.todos);
+    const deleteTargetKey =  todos.findIndex( v => targetKey === v.id);
+    todos.splice(deleteTargetKey, 1);
+    localStorage.setItem('todos', JSON.stringify( todos ) );
+    return new Promise( resolve => {
+        resolve({ data: true })
+    })
 };
 
 export const completeTodo = (payload) => {
