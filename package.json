@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
     "test": "npm run unit",
-    "build": "node build/build.js & npm install deployd-cli -g"
+    "build": "node build/build.js"
   },
   "dependencies": {
     "vue": "^2.5.2",
