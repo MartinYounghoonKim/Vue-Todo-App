@@ -13,8 +13,26 @@ const todoApi = (() => {
             localStorage.setItem('todos', JSON.stringify( todos ) );
             return item;
         },
-        update: () => {
+        update: (id, text) => {
+            const todos = JSON.parse(localStorage.todos);
+            const targetKey = id;
+            const editedTodo = text;
+            const editedTodoIndex = todos.findIndex(v => v.id === targetKey);
+            const todo = todos[editedTodoIndex];
 
+            todo.todo = editedTodo;
+            todos.splice(editedTodoIndex, 1, todo);
+
+            localStorage.setItem('todos', JSON.stringify( todos ) );
+            return todo;
+        },
+        delete: (id) => {
+            const todos = JSON.parse(localStorage.todos);
+            const deleteTargetKey =  todos.findIndex( v => id === v.id);
+
+            todos.splice(deleteTargetKey, 1);
+            
+            localStorage.setItem('todos', JSON.stringify( todos ) );
         }
     }
 })();
@@ -39,28 +57,19 @@ export const setTodoItem = ( todo ) => {
 };
 
 export const updateTodoItem = (payload) => {
-    const todos = JSON.parse(localStorage.todos);
-    const targetKey = payload.id;
-    const editedTodo = payload.editedTodo;
+    const { id, editedTodo } = payload;
+    const item = todoApi.update(id, editedTodo);
 
-    const editedTodoIndex = todos.findIndex(v => v.id === targetKey);
-    const todo = todos[editedTodoIndex];
-    todo.todo = editedTodo;
-
-    todos.splice(editedTodoIndex, 1, todo);
-    localStorage.setItem('todos', JSON.stringify( todos ) );
     return new Promise( resolve => {
         resolve({
-            data: todo
+            data: item
         })
     });
 };
 
 export const deleteTodoItem = (targetKey) => {
-    const todos = JSON.parse(localStorage.todos);
-    const deleteTargetKey =  todos.findIndex( v => targetKey === v.id);
-    todos.splice(deleteTargetKey, 1);
-    localStorage.setItem('todos', JSON.stringify( todos ) );
+    todoApi.delete(targetKey);
+
     return new Promise( resolve => {
         resolve({ data: true })
     })
