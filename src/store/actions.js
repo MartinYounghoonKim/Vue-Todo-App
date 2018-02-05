@@ -7,7 +7,6 @@ export default {
     },
     getTodoList: ({ commit }) => {
         getTodoList().then( res => {
-            console.log(res);
             commit( TODO.LIST, res.data );
         });
     },
