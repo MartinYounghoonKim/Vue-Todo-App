@@ -20,6 +20,6 @@ export default {
         states.todos.splice(deleteTargetKey, 1);
     },
     [TODO.ALL_COMPLETE](states, payload) {
-        states.todos = payload.map(v => v.data);
+        states.todos = payload.data.map(v => v);
     }
 }

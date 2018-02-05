@@ -97,14 +97,9 @@ export const completeAllTodos = (payload) => {
     todos.map( todo => {
         completeTodo(todo)
     });
-    console.log(todos)
     return new Promise( resolve => {
         resolve({
-            data: true
+            data: todoApi.fetch()
         })
     })
-
-    // return axios.all(
-    //     todos.map( todo => todoApi.put(`${todo.id}`, { isDone: isCompleteAll }))
-    // )
 };
