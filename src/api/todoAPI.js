@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const todoApi = (() => {
     return {
         fetch: () => JSON.parse(localStorage.todos),
@@ -94,7 +92,17 @@ export const completeTodo = (payload) => {
 };
 
 export const completeAllTodos = (payload) => {
-    const { isCompleteAll, todos } = payload;
+    const todos = todoApi.fetch();
+    const { isCompleteAll } = payload;
+    todos.map( todo => {
+        completeTodo(todo)
+    });
+    console.log(todos)
+    return new Promise( resolve => {
+        resolve({
+            data: true
+        })
+    })
 
     // return axios.all(
     //     todos.map( todo => todoApi.put(`${todo.id}`, { isDone: isCompleteAll }))
