@@ -2,6 +2,12 @@
 
 > A Vue.js project
 
+### Features
+
+* Node.js
+* Vue
+* Mongodb( deployd app ) *if you want to use localstorage, just checkout `netlify-master` branch.*
+
 ## Build Setup
 
 ``` bash
