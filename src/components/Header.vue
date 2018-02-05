@@ -6,6 +6,7 @@
             autocomplete="off"
             placeholder="What needs to be done?"
             class="new-todo"
+            v-model="newItem"
             @keydown.enter="addTodos"
         />
     </div>
