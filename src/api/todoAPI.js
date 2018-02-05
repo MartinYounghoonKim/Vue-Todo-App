@@ -31,7 +31,7 @@ const todoApi = (() => {
             const deleteTargetKey =  todos.findIndex( v => id === v.id);
 
             todos.splice(deleteTargetKey, 1);
-            
+
             localStorage.setItem('todos', JSON.stringify( todos ) );
         }
     }
@@ -79,9 +79,9 @@ export const completeTodo = (payload) => {
     const todos = JSON.parse(localStorage.todos);
     const primayKey = payload.id;
     const isDone = !payload.isDone;
-
     const editedTodoIndex = todos.findIndex(v => v.id === primayKey);
     const todo = todos[editedTodoIndex];
+
     todo.isDone = isDone;
     todos.splice(editedTodoIndex, 1, todo);
     localStorage.setItem('todos', JSON.stringify( todos ) );
