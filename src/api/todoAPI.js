@@ -1,35 +1,39 @@
 import axios from 'axios';
 
-const todoApi = axios.create({
-    baseURL: 'http://localhost:2403/todos',
-    timeout: 1000,
-    responseType: 'json'
-});
+const todoApi = (() => {
+    return {
+        fetch: () => JSON.parse(localStorage.todos),
+        post: (todo) => {
+            const todos = JSON.parse(localStorage.todos);
+            const number = Math.random();
+            const id = number.toString(36).substr(2, 9);
+            const item = { id, todo, isDone: false };
+
+            todos.push( item );
+            localStorage.setItem('todos', JSON.stringify( todos ) );
+            return item;
+        },
+        update: () => {
+
+        }
+    }
+})();
+
 export const getTodoList = () => {
     if (!localStorage.todos) {
         localStorage.setItem('todos', JSON.stringify( [] ) );
     }
     return new Promise( resolve => {
-        resolve({ data: JSON.parse(localStorage.todos) });
+        resolve({ data: todoApi.fetch() });
     })
 };
 
 export const setTodoItem = ( todo ) => {
-    const todos = JSON.parse(localStorage.todos);
-    var number = Math.random();
-    number.toString(36);
-    var id = number.toString(36).substr(2, 9);
-    todos.push( { id, todo, isDone: false } );
-
-    localStorage.setItem('todos', JSON.stringify( todos ) );
+    const item = todoApi.post(todo);
 
     return new Promise( resolve => {
         resolve({
-            data: {
-                id,
-                todo,
-                isDone: false
-            }
+            data: item
         })
     });
 };
@@ -83,7 +87,7 @@ export const completeTodo = (payload) => {
 export const completeAllTodos = (payload) => {
     const { isCompleteAll, todos } = payload;
 
-    return axios.all(
-        todos.map( todo => todoApi.put(`${todo.id}`, { isDone: isCompleteAll }))
-    )
+    // return axios.all(
+    //     todos.map( todo => todoApi.put(`${todo.id}`, { isDone: isCompleteAll }))
+    // )
 };
