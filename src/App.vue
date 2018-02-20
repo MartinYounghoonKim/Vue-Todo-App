@@ -56,7 +56,7 @@
         },
         methods: {
             addTodo(userValue) {
-                this.$store.dispatch('addTodo', userValue
+                this.$store.dispatch('addTodo', userValue);
             },
             editTodo(id, editedTodo) {
                 this.$store.dispatch('editTodo', {id, editedTodo});
